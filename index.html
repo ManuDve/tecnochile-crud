@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TecnoStore</title>
+    <!-- Estilos -->
+    <link rel="stylesheet" href="./css/estilo.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <img id="logo" src="./img/isotype_light.svg" alt="Logo TecnoChile">
+        <h1><strong>TecnoChile</strong> CRUD</h1>
+    </header>
+    <nav>
+
+        <div id="buscador">
+            <input id="input-buscador" type="text" placeholder="Ingrese su búsqueda">
+            <button id="boton-buscador" class="btn">
+            <i class="fa fa-search"></i></button>
+        </div>
+
+        <div id="sucursal">
+            <label for="sucursal">Sucursal:</label>
+            <input id="input-sucursal" name="sucursal" type="number" placeholder="Sucursal" value="31">
+        </div>
+        
+        <button id="boton-crear-producto"class="btn btn--azul"><i class="fa fa-plus"></i>&nbsp;&nbsp;Crear Producto
+        </button>
+    </nav>
+    <main>
+        <section id="titulos">
+            <h2>ID</h2>
+            <h2>Nombre</h2>
+            <h2>Precio</h2>
+            <h2>Link</h2>
+            <h2>Stock</h2>
+            <h2>Etiqueta</h2>
+            <h2>Descripción</h2>
+            <h2>Categoría</h2>
+            <h2>Editar</h2>
+        </section>
+        <section class="producto">
+            <p>01</p>
+            <p>Teclado RedDragon RGB</p>
+            <p>$3.990</p>
+            <p>http://www.algo.cl</p>
+            <p>4</p>
+            <p>teclado, periferico</p>
+            <p>Teclado mecánico con luces LED, inalámbrico</p>
+            <p>Teclado</p>
+            <div class="editar">
+                <i class="fa fa-edit"></i>
+                <i class="fa fa-trash"></i>
+            </div>
+        </section>
+        <section class="producto">
+            <p>02</p>
+            <p>Teclado DeVarajas Bluetooth</p>
+            <p>$30.990</p>
+            <p>http://www.algo.cl</p>
+            <p>2</p>
+            <p>teclado, periferico</p>
+            <p>Teclado mecánico con luces LED, Switches Brown, inalámbrico mediante Bluetooth</p>
+            <p>Teclado</p>
+            <div class="editar">
+                <i class="fa fa-edit"></i>
+                <i class="fa fa-trash"></i>
+            </div>
+        </section>
+    </main>
+</body>
+</html>

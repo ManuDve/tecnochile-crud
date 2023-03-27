@@ -1,0 +1,174 @@
+/*  Estilos Generales */
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+input, button {
+    all: unset;
+}
+
+:root {
+    --blue: #0058c3;
+    --light-blue: #026ced;
+    --light: white;
+    --gray: rgb(196, 196, 196);
+    --dark-gray: rgb(82, 82, 82);
+    --light-gray: rgb(241, 241, 241);
+    --ultralight-gray: #f7fbff;
+
+    --tiempo: 100ms;
+    --border-gray: 1px solid var(--gray)
+}
+
+body {
+    font-family: "Roboto", Arial, Helvetica, sans-serif;
+    color: var(--dark-gray);
+    overflow: scroll;
+}
+
+
+
+/* Header */
+
+header {
+    background-color: var(--blue);
+    display: flex;
+    gap: .5em;
+    align-items: center;
+    color: var(--light);
+    padding: 1em;
+}
+
+header #logo {
+    max-height: 50px;
+    width: auto;
+}
+
+header h1 {
+    font-size: 1.4rem;
+    font-weight: 300;
+    letter-spacing: 2px;
+} 
+
+/* Botones */
+
+button {
+    box-sizing: border-box;
+    transition: var(--tiempo);
+    cursor: pointer;
+}
+
+.btn {
+    padding: .7rem;
+    font-weight: 300;
+    font-size: 0.8rem;
+    border: 1px solid var(--gray);
+}
+
+.btn:hover {
+    background-color: var(--gray);
+    color: white;
+}
+
+.btn--azul {
+    padding:calc(.7rem + 1px);
+    border: none;
+    background-color: var(--blue);
+    color: var(--light);
+}
+
+.btn--azul:hover {
+    background-color: var(--light-blue);
+}
+
+/* Nav */
+
+
+
+nav {
+    display: flex;
+    padding: 1em;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+#buscador {
+    display: flex;
+}
+
+#input-buscador {
+    padding: .5rem;
+    min-width: 380px;
+    width: 30%;
+    border: 1px solid var(--gray);
+}
+
+#input-sucursal {
+    padding: .5rem;
+    border: 1px solid var(--gray);
+}
+
+#boton-buscador {
+    border-left: none;
+}
+
+
+/* Main */
+
+
+
+section {
+    text-align: center;
+    display: grid;
+    padding: 1em;
+    grid-template-columns: 1fr 3fr 3fr 3fr 1fr 3fr 5fr 1fr 3fr;
+            /* <h2>ID</h2>
+            <h2>Nombre</h2>
+            <h2>Precio</h2>
+            <h2>Link</h2>
+            <h2>Stock</h2>
+            <h2>Etiqueta</h2>
+            <h2>Decripción</h2>
+            <h2>Sucursal</h2>
+            <h2>Editar</h2> */
+}
+
+#titulos {
+    background-color: var(--light-gray);
+    border-top: var(--border-gray);
+    border-bottom: var(--border-gray);
+}
+
+#titulos h2 {
+    font-size: 0.8rem;
+}
+
+.producto {
+    border-bottom: var(--border-gray);
+    font-size: 0.8rem;
+}
+
+.producto:hover {
+    background-color: var(--ultralight-gray);
+}
+
+.editar {
+    display: flex;
+    color: var(--blue);
+    font-size: 1.5rem;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5em;
+}
+
+.editar i {
+    cursor: pointer;
+}
+
+
+.editar i:hover {
+    cursor: pointer;
+    color: var(--light-blue);
+}
