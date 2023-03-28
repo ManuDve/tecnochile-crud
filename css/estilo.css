@@ -12,11 +12,12 @@ input, button {
 :root {
     --blue: #0058c3;
     --light-blue: #026ced;
+    --ultra-light-blue: #6badff;
     --light: white;
     --gray: rgb(196, 196, 196);
     --dark-gray: rgb(82, 82, 82);
     --light-gray: rgb(241, 241, 241);
-    --ultralight-gray: #f7fbff;
+    --ultralight-gray: #e5e5e5;
 
     --tiempo: 100ms;
     --border-gray: 1px solid var(--gray)
@@ -85,8 +86,6 @@ button {
 
 /* Nav */
 
-
-
 nav {
     display: flex;
     padding: 1em;
@@ -110,20 +109,55 @@ nav {
     border: 1px solid var(--gray);
 }
 
+
 #boton-buscador {
     border-left: none;
 }
 
+#input-actual{
+    background-color: var(--blue);
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+
+}
+
+#input-actual input {
+    padding: .5em;
+    background-color: var(--light-blue);
+    color: var(--light);
+    font-size: 0.8rem;
+}
+
+#input-actual input::placeholder {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--ultra-light-blue);
+}
+
+#id-actual, #stock-actual  {
+    max-width: 40px;
+}
+
+#precio-actual {
+    max-width: 100px;
+}
+
+#nombre-actual, #link-actual, #descripcion-actual, #categoria-actual {
+    min-width: 180px;
+}
+
+
 
 /* Main */
-
-
 
 section {
     text-align: center;
     display: grid;
+    gap: 1em;
     padding: 1em;
-    grid-template-columns: 1fr 3fr 3fr 3fr 1fr 3fr 5fr 1fr 3fr;
+    grid-template-columns: 1fr 3fr 3fr 3fr 1fr 3fr 4fr 1fr 3fr;
             /* <h2>ID</h2>
             <h2>Nombre</h2>
             <h2>Precio</h2>
@@ -148,9 +182,15 @@ section {
 .producto {
     border-bottom: var(--border-gray);
     font-size: 0.8rem;
+    display: grid;
+    align-items: center;
 }
 
-.producto:hover {
+/* .producto:hover {
+    background-color: var(--ultralight-gray);
+} */
+
+.producto--gray {
     background-color: var(--ultralight-gray);
 }
 
@@ -158,8 +198,8 @@ section {
     display: flex;
     color: var(--blue);
     font-size: 1.5rem;
-    justify-content: center;
-    align-items: center;
+    padding-left: 1em;
+    justify-content: flex-start;
     gap: 0.5em;
 }
 
@@ -171,4 +211,12 @@ section {
 .editar i:hover {
     cursor: pointer;
     color: var(--light-blue);
+}
+
+.editar .red {
+    color: red;
+}
+
+.editar .green {
+    color: green
 }
