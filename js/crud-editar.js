@@ -9,7 +9,8 @@ let categorias = []
 let sucursales = []
 let nombreCategoria = ''
 
-
+const inputBuscador = document.querySelector('#input-buscador');
+const btnBuscador = document.querySelector('#boton-buscador');
 const inputSucursal = document.querySelector('#input-sucursal');
 const btnCrearProducto = document.querySelector('#crear-producto');
 const idActual = document.querySelector('#id-actual');
@@ -23,6 +24,7 @@ const categoriaActual = document.querySelector('#categoria-actual');
 const btnAceptarProducto = document.querySelector('#aceptar-producto');
 const btnCancelarProducto = document.querySelector('#cancelar-producto');
 
+btnBuscador.addEventListener('click',buscarProducto);
 btnCrearProducto.addEventListener('click',limpiarInput);
 btnAceptarProducto.addEventListener('click', btnGuardarProducto);
 btnCancelarProducto.addEventListener('click', limpiarInput);
@@ -42,42 +44,7 @@ async function insertarProductos() {
     .then(response => response.json())
     .then(data => {
         productos = data
-        productos.forEach(elemento => {
-            // obtenerCategorias(contenido.idCategoria)
-            const nuevaSeccion = document.createElement("section");
-            const botonesEditar = document.createElement("div");
-            nuevaSeccion.classList.add("producto")
-            botonesEditar.classList.add("editar");
-            let p1 = document.createElement("p");
-            p1.textContent = elemento.id;
-            nuevaSeccion.appendChild(p1);
-            let p2 = document.createElement("p");
-            p2.textContent = elemento.nombre;
-            nuevaSeccion.appendChild(p2);
-            let p3 = document.createElement("p");
-            p3.textContent = elemento.precio;
-            nuevaSeccion.appendChild(p3);
-            let p4 = document.createElement("p");
-            p4.textContent = elemento.link;
-            nuevaSeccion.appendChild(p4);
-            let p5 = document.createElement("p");
-            p5.textContent = elemento.stock;
-            nuevaSeccion.appendChild(p5);
-            let p6 = document.createElement("p");
-            p6.textContent = elemento.etiqueta;
-            nuevaSeccion.appendChild(p6);
-            let p7 = document.createElement("p");
-            p7.textContent = elemento.descripcion; 
-            nuevaSeccion.appendChild(p7);   
-            let p8 = document.createElement("p");
-            p8.textContent = elemento.idCategoria;               
-            nuevaSeccion.appendChild(p8);
-               
-           
-            nuevaSeccion.appendChild(botonesEditar);
-            main.appendChild(nuevaSeccion)
-        
-        })
+        mostrarProductos();
 
     });
     inicializarBotones();
@@ -85,12 +52,54 @@ async function insertarProductos() {
     limpiarInput();
 }
 
+function mostrarProductos(){
+    productos.forEach(elemento => {
+        // obtenerCategorias(contenido.idCategoria)
+        const nuevaSeccion = document.createElement("section");
+        const botonesEditar = document.createElement("div");
+        nuevaSeccion.classList.add("producto")
+        botonesEditar.classList.add("editar");
+        let p1 = document.createElement("p");
+        p1.textContent = elemento.id;
+        nuevaSeccion.appendChild(p1);
+        let p2 = document.createElement("p");
+        p2.textContent = elemento.nombre;
+        nuevaSeccion.appendChild(p2);
+        let p3 = document.createElement("p");
+        p3.textContent = elemento.precio;
+        nuevaSeccion.appendChild(p3);
+        let p4 = document.createElement("p");
+        p4.textContent = elemento.link;
+        nuevaSeccion.appendChild(p4);
+        let p5 = document.createElement("p");
+        p5.textContent = elemento.stock;
+        nuevaSeccion.appendChild(p5);
+        let p6 = document.createElement("p");
+        p6.textContent = elemento.etiqueta;
+        nuevaSeccion.appendChild(p6);
+        let p7 = document.createElement("p");
+        p7.textContent = elemento.descripcion; 
+        nuevaSeccion.appendChild(p7);   
+        let p8 = document.createElement("p");
+        p8.textContent = elemento.idCategoria;               
+        nuevaSeccion.appendChild(p8);
+           
+       
+        nuevaSeccion.appendChild(botonesEditar);
+        main.appendChild(nuevaSeccion)
+    
+    })
+}
 
 function eliminarTodosLosProductos(){
+ 
     let todosLosProductos = document.querySelectorAll(".producto")
     todosLosProductos.forEach(element => {
-         element.remove();
+    element.remove();
     });
+        
+    
+
 }
 
 function crearProducto(){
@@ -138,10 +147,13 @@ function removerBotones() {
 }
 
 function removerProducto(index){
-    const seccionActual  = document.querySelectorAll(".producto")
-    seccionActual[index].remove();
-    //Elmina lod productos de base de datos
-    eliminarProductos(productos[index].id);
+    if (window.confirm("¿Esta seguro que desea eliminar este producto?")){      
+        const seccionActual  = document.querySelectorAll(".producto")
+        seccionActual[index].remove();
+        //Elmina lod productos de base de datos
+         eliminarProductos(productos[index].id);
+    }   
+   
 }
 
 
@@ -233,11 +245,17 @@ consultarSucursales()
 //Agrega y modifica productos en la Base de datos 
 async function btnGuardarProducto() {
     let metodo = ''
+    let mensajeCorrecto = ''
+    let mensajeErroneo=''
     if (idActual.value===''){
         metodo = 'POST';
         idActual.value= '0';
+        mensajeCorrecto = 'El producto a sido creado correctamente';
+        mensajeErroneo='El producto no se ha podido agregar';
     }else {
         metodo = 'PUT';
+        mensajeCorrecto = 'El producto a sido actualizado correctamente';
+        mensajeErroneo='El producto no se ha podido actualizar'        
     }
     
     //actualizo la Base de datos de productos  
@@ -262,10 +280,10 @@ async function btnGuardarProducto() {
         })
     }).then(response => {
         if (!response.ok){
-            alert("No se pudo acceder al producto");
+            alert(mensajeErroneo);
             return;
         }else {
-            alert("El producto exitoso")
+            alert(mensajeCorrecto)
         }
 
     })
@@ -274,18 +292,19 @@ async function btnGuardarProducto() {
 
 //eliminar productos
 async function eliminarProductos(llegaId) {
-   
-    let response = await fetch(urlProductos+'/'+llegaId, {
-        method: 'DELETE',   
 
-    }).then(response => {
-        if (!response.ok){
-            alert("No se pudo eliminar producto");
-            return;
-        }else {
-            alert("El producto fue eliminado exitosamente")
-        }
-    })
+        let response = await fetch(urlProductos+'/'+llegaId, {
+            method: 'DELETE',   
+
+        }).then(response => {
+            if (!response.ok){
+                alert("No se pudo eliminar producto");
+                return;
+            }else {
+                alert("El producto fue eliminado exitosamente")
+            }
+        })
+ 
 }
 
 
@@ -326,5 +345,30 @@ async function obtenerCategorias(palabra) {
        } 
 
     })
+
+}
+
+function buscarProducto(){
+    if (inputBuscador.value === ''){
+        insertarProductos();
+    }else {
+        const searchTerm = inputBuscador.value.toLowerCase();
+        productos = productos.filter(producto => {
+            const name1 = producto.nombre.toLowerCase();
+            const description1 = producto.descripcion.toLowerCase();
+            const etiquetas1 = producto.etiqueta.toLowerCase();
+        
+            return name1.includes(searchTerm) || description1.includes(searchTerm) || etiquetas1.includes(searchTerm);
+            })
+            eliminarTodosLosProductos();
+            recargarProductos()
+    }
+}
+
+function recargarProductos(){
+ mostrarProductos()
+    inicializarBotones();
+    agregarListenersBotones();
+    limpiarInput();
 
 }
