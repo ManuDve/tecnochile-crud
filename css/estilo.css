@@ -18,7 +18,10 @@ input, button {
     --dark-gray: rgb(82, 82, 82);
     --light-gray: rgb(241, 241, 241);
     --ultralight-gray: #e5e5e5;
-
+    --red: #dc0000;
+    --dark-red: #950000;
+    --green: #00951b;
+    --dark-green: #006312;
     --tiempo: 100ms;
     --border-gray: 1px solid var(--gray)
 }
@@ -84,6 +87,31 @@ button {
     background-color: var(--light-blue);
 }
 
+.btn--rojo {
+    font-size: 120%;
+    padding:calc(.7rem + 1px);
+    border: none;
+    background-color: var(--red);
+    color: var(--light);
+}
+
+.btn--rojo:hover {
+    background-color: var(--dark-red);
+}
+
+.btn--green {
+    font-size: 120%;
+    padding:calc(.7rem + 1px);
+    border: none;
+    background-color: var(--green);
+    color: var(--light);
+}
+
+.btn--green:hover {
+    background-color: var(--dark-green);
+}
+
+
 /* Nav */
 
 nav {
@@ -106,6 +134,7 @@ nav {
 
 #input-sucursal {
     padding: .5rem;
+    width: 300px;
     border: 1px solid var(--gray);
 }
 
@@ -121,7 +150,7 @@ nav {
 
 #input-wrapper {
     display: grid;
-    grid-template-columns: 1fr 3fr 3fr 3fr 1fr 3fr 4fr 1fr 3fr;
+    grid-template-columns: 1fr 3fr 2fr 4fr 1fr 3fr 5fr 1fr 1fr 1fr;
     gap: 1em;
 }
 
@@ -148,7 +177,7 @@ section {
     display: grid;
     gap: 1em;
     padding: 1em;
-    grid-template-columns: 1fr 3fr 3fr 3fr 1fr 3fr 4fr 1fr 3fr;
+    grid-template-columns: 1fr 3fr 3fr 3fr 1fr 3fr 5fr 1fr 3fr;
             /* <h2>ID</h2>
             <h2>Nombre</h2>
             <h2>Precio</h2>
@@ -190,7 +219,7 @@ section {
     color: var(--blue);
     font-size: 1.5rem;
     padding-left: 1em;
-    justify-content: flex-start;
+    justify-content: center;
     gap: 0.5em;
 }
 
