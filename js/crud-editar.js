@@ -1,5 +1,32 @@
 // Variables
 
+let urlProductos = 'https://slifer.bsite.net/td-producto';
+let urlConsultarCategoria = 'https://slifer.bsite.net/td-categoria';
+let urlConsultarSucursal = 'https://slifer.bsite.net/td-sucursal';
+
+let productos = []
+let categorias = []
+let sucursales = []
+let nombreCategoria = ''
+
+
+const inputSucursal = document.querySelector('#input-sucursal');
+const btnCrearProducto = document.querySelector('#crear-producto');
+const idActual = document.querySelector('#id-actual');
+const nombreActual = document.querySelector('#nombre-actual');
+const precioActual = document.querySelector('#precio-actual');
+const linkActual = document.querySelector('#link-actual');
+const stockActual = document.querySelector('#stock-actual');
+const etiquetaActual = document.querySelector('#etiqueta-actual');
+const descripcionActual = document.querySelector('#descripcion-actual');
+const categoriaActual = document.querySelector('#categoria-actual');
+const btnAceptarProducto = document.querySelector('#aceptar-producto');
+const btnCancelarProducto = document.querySelector('#cancelar-producto');
+
+btnCrearProducto.addEventListener('click',limpiarInput);
+btnAceptarProducto.addEventListener('click', btnGuardarProducto);
+btnCancelarProducto.addEventListener('click', limpiarInput);
+
 const inputsEditar = document.querySelector("#input-wrapper");
 const botonCrearProducto = document.querySelector("#boton-crear-producto");
 const main = document.querySelector("main");
@@ -8,41 +35,72 @@ const CANTIDAD_DE_ELEMENTOS = 8;
 
 // Funciones de Datos
 
-function insertarProductos(){
-    
-    productosImaginarios.forEach(elemento=>{
-        const nuevaSeccion = document.createElement("section");
-        const botonesEditar = document.createElement("div");
-        nuevaSeccion.classList.add("producto")
-        botonesEditar.classList.add("editar");
-        for (let dato in elemento) {
-            // Evita que se genere la sucursal
-            if (dato != "sucursal") {
-                let p = document.createElement("p");
-                p.textContent = elemento[dato];
-                nuevaSeccion.appendChild(p);
-            }
-        }
-        nuevaSeccion.appendChild(botonesEditar);
-        main.appendChild(nuevaSeccion)
-    })
+//consultar productos
+async function insertarProductos() {
+    //Voy a buscar los prodcutos a la Base de datos
+    let data = await fetch(urlProductos+'/idSucursal/31')
+    .then(response => response.json())
+    .then(data => {
+        productos = data
+        productos.forEach(elemento => {
+            // obtenerCategorias(contenido.idCategoria)
+            const nuevaSeccion = document.createElement("section");
+            const botonesEditar = document.createElement("div");
+            nuevaSeccion.classList.add("producto")
+            botonesEditar.classList.add("editar");
+            let p1 = document.createElement("p");
+            p1.textContent = elemento.id;
+            nuevaSeccion.appendChild(p1);
+            let p2 = document.createElement("p");
+            p2.textContent = elemento.nombre;
+            nuevaSeccion.appendChild(p2);
+            let p3 = document.createElement("p");
+            p3.textContent = elemento.precio;
+            nuevaSeccion.appendChild(p3);
+            let p4 = document.createElement("p");
+            p4.textContent = elemento.link;
+            nuevaSeccion.appendChild(p4);
+            let p5 = document.createElement("p");
+            p5.textContent = elemento.stock;
+            nuevaSeccion.appendChild(p5);
+            let p6 = document.createElement("p");
+            p6.textContent = elemento.etiqueta;
+            nuevaSeccion.appendChild(p6);
+            let p7 = document.createElement("p");
+            p7.textContent = elemento.descripcion; 
+            nuevaSeccion.appendChild(p7);   
+            let p8 = document.createElement("p");
+            p8.textContent = elemento.idCategoria;               
+            nuevaSeccion.appendChild(p8);
+               
+           
+            nuevaSeccion.appendChild(botonesEditar);
+            main.appendChild(nuevaSeccion)
+        
+        })
 
+    });
+    inicializarBotones();
+    agregarListenersBotones();
+    limpiarInput();
 }
+
 
 function eliminarTodosLosProductos(){
     let todosLosProductos = document.querySelectorAll(".producto")
     todosLosProductos.forEach(element => {
-        element.remove();
+         element.remove();
     });
 }
 
 function crearProducto(){
-    let productoNuevo = new Producto();
-    productosImaginarios.push(productoNuevo)
+    // let productoNuevo = new Producto();
+    // productosImaginarios.push(productoNuevo)
     eliminarTodosLosProductos();
     insertarProductos();
-    inicializarBotones();
-    agregarListenersBotones();
+    limpiarInput();
+    // inicializarBotones();
+    // agregarListenersBotones();
 }
 
 
@@ -68,6 +126,8 @@ function agregarAceptarCancelar(index){
     cancelar.classList.add("fa", "fa-check-circle", "green")
     seccionEditar[index].appendChild(aceptar)
     seccionEditar[index].appendChild(cancelar)
+
+
 }
 
 function removerBotones() {
@@ -80,6 +140,8 @@ function removerBotones() {
 function removerProducto(index){
     const seccionActual  = document.querySelectorAll(".producto")
     seccionActual[index].remove();
+    //Elmina lod productos de base de datos
+    eliminarProductos(productos[index].id);
 }
 
 
@@ -161,7 +223,108 @@ function agregarListenersBotones(){
 }
 
 // Inicializar
-
 insertarProductos();
-inicializarBotones();
-agregarListenersBotones();
+consultarSucursales()
+// inicializarBotones();
+// agregarListenersBotones();
+
+
+
+//Agrega y modifica productos en la Base de datos 
+async function btnGuardarProducto() {
+    let metodo = ''
+    if (idActual.value===''){
+        metodo = 'POST';
+        idActual.value= '0';
+    }else {
+        metodo = 'PUT';
+    }
+    
+    //actualizo la Base de datos de productos  
+    let response = await fetch(urlProductos, {
+        method: metodo,   
+        mode: 'cors', 
+        cache: 'no-cache',
+        credencials: 'same-origin',
+        headers: { 'Content-Type': 'application/json' },
+        redirect: 'follow',
+        referrerPolicy: 'no-referrer',
+        body: JSON.stringify({
+            "id": idActual.value,
+            "nombre": nombreActual.value,
+            "precio": precioActual.value,
+            "link": linkActual.value,
+            "stock": stockActual.value,
+            "etiqueta": etiquetaActual.value,
+            "descripcion": descripcionActual.value,
+            "idCategoria": categoriaActual.value,
+            "idSucursal": 31 
+        })
+    }).then(response => {
+        if (!response.ok){
+            alert("No se pudo acceder al producto");
+            return;
+        }else {
+            alert("El producto exitoso")
+        }
+
+    })
+    crearProducto()
+}
+
+//eliminar productos
+async function eliminarProductos(llegaId) {
+   
+    let response = await fetch(urlProductos+'/'+llegaId, {
+        method: 'DELETE',   
+
+    }).then(response => {
+        if (!response.ok){
+            alert("No se pudo eliminar producto");
+            return;
+        }else {
+            alert("El producto fue eliminado exitosamente")
+        }
+    })
+}
+
+
+
+//limpiar variables de input 
+function limpiarInput() {
+    idActual.value = ''
+    nombreActual.value = ''
+    precioActual.value = ''
+    linkActual.value = ''
+    stockActual.value = ''
+    etiquetaActual.value = ''
+    descripcionActual.value = ''
+    categoriaActual.value = ''
+}
+
+//consultar sucursales
+async function consultarSucursales() {
+    let data = await fetch(urlConsultarSucursal)
+    .then(response => response.json())
+    .then(data => {
+        sucursales = data
+        sucursales.forEach(contenido => {
+            if(contenido.id === 31){
+               inputSucursal.value  = contenido.id+' '+contenido.nombre
+            }
+        })    
+    });
+}
+
+//consultar categorias
+async function obtenerCategorias(palabra) {
+ 
+    categorias.forEach(contenido => {
+       if(contenido.id === palabra){
+        nombreCategoria = contenido.nombre
+        
+       } 
+
+    })
+
+}
