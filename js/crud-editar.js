@@ -25,6 +25,11 @@ const categoriaActual = document.querySelector('#categoria-actual');
 const btnCancelarProducto = document.querySelector('#cancelar-producto');
 
 btnBuscador.addEventListener('click',buscarProducto);
+inputBuscador.addEventListener('keyup',(e)=>{
+    if (e.code === 'Enter') {
+        buscarProducto();
+    }
+});
 btnCrearProducto.addEventListener('click',limpiarInput);
 btnCancelarProducto.addEventListener('click', ()=>{
     ocultarVisibilidad();
