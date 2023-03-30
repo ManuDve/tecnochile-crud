@@ -51,12 +51,12 @@
             <div id="input-wrapper">
                 <input type="text" name="" id="id-actual" placeholder="ID" readonly>
                 <input type="text" name="" id="nombre-actual" placeholder="Nombre">
-                <input type="text" name="" id="precio-actual" placeholder="Precio">
+                <input type="number" name="" id="precio-actual" placeholder="Precio" min="0">
                 <input type="text" name="" id="link-actual" placeholder="Link">
-                <input type="text" name="" id="stock-actual" placeholder="Stock">
+                <input type="number" name="" id="stock-actual" placeholder="Stock" min="0">
                 <input type="text" name="" id="etiqueta-actual" placeholder="Etiquetas">
                 <input type="text" name="" id="descripcion-actual" placeholder="Descripción">
-                <input type="text" name="" id="categoria-actual" placeholder="Cat">
+                <input type="number" name="" id="categoria-actual" placeholder="Cat" min="0">
                 <button id="aceptar-producto" class="btn btn--green" onclick="return validarCampos()"><i class="fa fa-check"></i></button>
                 <button id="cancelar-producto" class="btn btn--rojo"><i class="fa fa-remove"></i>
                 </button>
