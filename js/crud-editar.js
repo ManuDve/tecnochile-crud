@@ -127,7 +127,7 @@ function crearBotones() {
     });
 }
 
-function agregarAceptarCancelar(index){
+/* function agregarAceptarCancelar(index){
     const seccionEditar = document.querySelectorAll(".editar");
     const aceptar = document.createElement("i");
     const cancelar = document.createElement("i");
@@ -137,7 +137,7 @@ function agregarAceptarCancelar(index){
     seccionEditar[index].appendChild(cancelar)
 
 
-}
+} */
 
 function removerBotones() {
     const seccionEditar = document.querySelectorAll(".editar");
@@ -203,8 +203,8 @@ function agregarListenersBotones(){
         element.addEventListener("click", ()=>{
             inicializarBotones();
             removerEstadoProductos();
-            agregarAceptarCancelar(index);
             cambiarEstadoProducto(index);
+            toggleVisibilidad();
             actualizarPlaceHolders(index)
             agregarListenersBotones();
         })
