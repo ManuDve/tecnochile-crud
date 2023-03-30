@@ -358,6 +358,8 @@ async function obtenerCategorias(palabra) {
 
 function buscarProducto(){
     if (inputBuscador.value === ''){
+        eliminarTodosLosProductos();
+
         insertarProductos(1);
     }else {
         eliminarTodosLosProductos();
