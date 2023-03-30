@@ -240,3 +240,25 @@ section {
 .editar .green {
     color: green
 }
+
+/* Input Actual Hidden */
+
+.hidden {
+    display: none!important;
+}
+
+.show {
+    animation: fadeInBottom 500ms backwards;
+    display: flex!important;
+}
+
+/* Keyframes */
+
+@keyframes fadeInBottom {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 100;
+    }
+}
