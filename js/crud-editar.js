@@ -26,8 +26,8 @@ const btnCancelarProducto = document.querySelector('#cancelar-producto');
 
 btnBuscador.addEventListener('click',buscarProducto);
 btnCrearProducto.addEventListener('click',limpiarInput);
-
 btnCancelarProducto.addEventListener('click', limpiarInput);
+
 
 const inputsEditar = document.querySelector("#input-wrapper");
 const botonCrearProducto = document.querySelector("#boton-crear-producto");
