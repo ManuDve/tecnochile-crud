@@ -45,7 +45,42 @@ async function insertarProductos() {
     .then(data => {
         productos = data
         mostrarProductos();
-
+        productos.forEach(elemento => {
+            // obtenerCategorias(contenido.idCategoria)
+            const nuevaSeccion = document.createElement("section");
+            const botonesEditar = document.createElement("div");
+            nuevaSeccion.classList.add("producto")
+            botonesEditar.classList.add("editar");
+            let p1 = document.createElement("p");
+            p1.textContent = elemento.id;
+            nuevaSeccion.appendChild(p1);
+            let p2 = document.createElement("p");
+            p2.textContent = elemento.nombre;
+            nuevaSeccion.appendChild(p2);
+            let p3 = document.createElement("p");
+            p3.textContent = elemento.precio;
+            nuevaSeccion.appendChild(p3);
+            let p4 = document.createElement("p");
+            p4.textContent = elemento.link;
+            nuevaSeccion.appendChild(p4);
+            let p5 = document.createElement("p");
+            p5.textContent = elemento.stock;
+            nuevaSeccion.appendChild(p5);
+            let p6 = document.createElement("p");
+            p6.textContent = elemento.etiqueta;
+            nuevaSeccion.appendChild(p6);
+            let p7 = document.createElement("p");
+            p7.textContent = elemento.descripcion; 
+            nuevaSeccion.appendChild(p7);   
+            let p8 = document.createElement("p");
+            p8.textContent = elemento.idCategoria;               
+            nuevaSeccion.appendChild(p8);
+               
+           
+            nuevaSeccion.appendChild(botonesEditar);
+            main.appendChild(nuevaSeccion)
+        
+        })
     });
     inicializarBotones();
     agregarListenersBotones();
@@ -91,6 +126,7 @@ function mostrarProductos(){
     })
 }
 
+
 function eliminarTodosLosProductos(){
  
     let todosLosProductos = document.querySelectorAll(".producto")
@@ -127,7 +163,7 @@ function crearBotones() {
     });
 }
 
-function agregarAceptarCancelar(index){
+/* function agregarAceptarCancelar(index){
     const seccionEditar = document.querySelectorAll(".editar");
     const aceptar = document.createElement("i");
     const cancelar = document.createElement("i");
@@ -136,8 +172,7 @@ function agregarAceptarCancelar(index){
     seccionEditar[index].appendChild(aceptar)
     seccionEditar[index].appendChild(cancelar)
 
-
-}
+} */
 
 function removerBotones() {
     const seccionEditar = document.querySelectorAll(".editar");
@@ -154,6 +189,10 @@ function removerProducto(index){
          eliminarProductos(productos[index].id);
     }   
    
+    const seccionActual  = document.querySelectorAll(".producto")
+    seccionActual[index].remove();
+    //Elmina lod productos de base de datos
+    eliminarProductos(productos[index].id);
 }
 
 
@@ -203,7 +242,7 @@ function agregarListenersBotones(){
         element.addEventListener("click", ()=>{
             inicializarBotones();
             removerEstadoProductos();
-            agregarAceptarCancelar(index);
+            /* agregarAceptarCancelar(index); */
             cambiarEstadoProducto(index);
             actualizarPlaceHolders(index)
             agregarListenersBotones();
@@ -256,6 +295,11 @@ async function btnGuardarProducto() {
         metodo = 'PUT';
         mensajeCorrecto = 'El producto a sido actualizado correctamente';
         mensajeErroneo='El producto no se ha podido actualizar'        
+    if (idActual.value===''){
+        metodo = 'POST';
+        idActual.value= '0';
+    }else {
+        metodo = 'PUT';
     }
     
     //actualizo la Base de datos de productos  
@@ -284,6 +328,10 @@ async function btnGuardarProducto() {
             return;
         }else {
             alert(mensajeCorrecto)
+            alert("No se pudo acceder al producto");
+            return;
+        }else {
+            alert("El producto exitoso")
         }
 
     })
@@ -304,7 +352,18 @@ async function eliminarProductos(llegaId) {
                 alert("El producto fue eliminado exitosamente")
             }
         })
- 
+    
+    let response = await fetch(urlProductos+'/'+llegaId, {
+        method: 'DELETE',   
+
+    }).then(response => {
+        if (!response.ok){
+            alert("No se pudo eliminar producto");
+            return;
+        }else {
+            alert("El producto fue eliminado exitosamente")
+        }
+    })
 }
 
 
