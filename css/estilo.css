@@ -146,6 +146,7 @@ nav {
 #input-actual{
     background-color: var(--blue);
     display: flex;
+    transition: 500ms;
 }
 
 #input-wrapper {
