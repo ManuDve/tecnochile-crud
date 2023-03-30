@@ -3,6 +3,11 @@ function validarCampos() {
     let precio = document.getElementById("precio-actual").value;
     let stock = document.getElementById("stock-actual").value;
   
+    if (nombre.length === 0) {
+        alert("El campo nombre no puede estar vacío");
+        return false;
+    }
+
     if (nombre.length > 50) {
       alert("El nombre no puede tener más de 50 caracteres");
       return false;
