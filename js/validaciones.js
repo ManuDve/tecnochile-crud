@@ -27,6 +27,7 @@ function validarCampos() {
       alert("El stock debe ser un número entero válido");
       return false;
     }
-  
+    btnGuardarProducto();
     return true;
+    
   }

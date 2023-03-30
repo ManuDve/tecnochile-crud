@@ -21,12 +21,12 @@ const stockActual = document.querySelector('#stock-actual');
 const etiquetaActual = document.querySelector('#etiqueta-actual');
 const descripcionActual = document.querySelector('#descripcion-actual');
 const categoriaActual = document.querySelector('#categoria-actual');
-const btnAceptarProducto = document.querySelector('#aceptar-producto');
+
 const btnCancelarProducto = document.querySelector('#cancelar-producto');
 
 btnBuscador.addEventListener('click',buscarProducto);
 btnCrearProducto.addEventListener('click',limpiarInput);
-btnAceptarProducto.addEventListener('click', btnGuardarProducto);
+
 btnCancelarProducto.addEventListener('click', limpiarInput);
 
 const inputsEditar = document.querySelector("#input-wrapper");
@@ -38,17 +38,22 @@ const CANTIDAD_DE_ELEMENTOS = 8;
 // Funciones de Datos
 
 //consultar productos
-async function insertarProductos() {
+async function insertarProductos(llegada) {
     //Voy a buscar los prodcutos a la Base de datos
     let data = await fetch(urlProductos+'/idSucursal/31')
     .then(response => response.json())
     .then(data => {
         productos = data
-        mostrarProductos();
+        if (llegada === 1){
+            mostrarProductos();
+        }
+          
 
     });
-    inicializarBotones();
-    agregarListenersBotones();
+    if (llegada === 1){
+        inicializarBotones();
+        agregarListenersBotones();
+    }    
     limpiarInput();
 }
 
@@ -106,7 +111,7 @@ function crearProducto(){
     // let productoNuevo = new Producto();
     // productosImaginarios.push(productoNuevo)
     eliminarTodosLosProductos();
-    insertarProductos();
+    insertarProductos(1);
     limpiarInput();
     // inicializarBotones();
     // agregarListenersBotones();
@@ -235,7 +240,7 @@ function agregarListenersBotones(){
 }
 
 // Inicializar
-insertarProductos();
+insertarProductos(1);
 consultarSucursales()
 // inicializarBotones();
 // agregarListenersBotones();
@@ -250,11 +255,11 @@ async function btnGuardarProducto() {
     if (idActual.value===''){
         metodo = 'POST';
         idActual.value= '0';
-        mensajeCorrecto = 'El producto a sido creado correctamente';
+        mensajeCorrecto = 'El producto ha sido creado correctamente';
         mensajeErroneo='El producto no se ha podido agregar';
     }else {
         metodo = 'PUT';
-        mensajeCorrecto = 'El producto a sido actualizado correctamente';
+        mensajeCorrecto = 'El producto ha sido actualizado correctamente';
         mensajeErroneo='El producto no se ha podido actualizar'        
     }
     
@@ -350,8 +355,10 @@ async function obtenerCategorias(palabra) {
 
 function buscarProducto(){
     if (inputBuscador.value === ''){
-        insertarProductos();
+        insertarProductos(1);
     }else {
+        eliminarTodosLosProductos();
+        insertarProductos(0)
         const searchTerm = inputBuscador.value.toLowerCase();
         productos = productos.filter(producto => {
             const name1 = producto.nombre.toLowerCase();
@@ -366,7 +373,7 @@ function buscarProducto(){
 }
 
 function recargarProductos(){
- mostrarProductos()
+    mostrarProductos()
     inicializarBotones();
     agregarListenersBotones();
     limpiarInput();
