@@ -263,3 +263,37 @@ section {
         opacity: 100;
     }
 }
+
+/* Media Queries */
+
+@media screen and (max-width: 720px) {
+    nav {
+        justify-content: center;
+    }
+
+    nav, h2, p, i {
+        font-size: 80%;
+    }
+    #buscador {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 1em;
+        width: 100%;
+    }
+
+    #input-buscador {
+        width: 90%;
+    }
+
+}
+
+@media screen and (max-width: 600px) {
+    *  {
+        overflow: scroll;
+    }
+    
+    .editar {
+        padding-left: 0;
+        gap: 0;
+    } 
+}
